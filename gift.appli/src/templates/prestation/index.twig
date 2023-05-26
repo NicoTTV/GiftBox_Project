@@ -1,0 +1,11 @@
+{% extends "base.twig" %}
+
+{% block main %}
+    <h1>Prestations</h1>
+    <ul>
+        {% for categorie in categories %}
+            <li><a href="{{ url_for('categ2prestas',{'id':categorie.id}) }}">{{ categorie.libelle | capitalize }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+

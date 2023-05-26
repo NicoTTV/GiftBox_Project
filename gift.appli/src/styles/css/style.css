@@ -1,0 +1,22 @@
+@font-face {
+    font-family: 'Bruno Ace';
+    src: url('../fonts/Bruno_Ace/BrunoAceSC-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Tilt_Neon';
+    src: url('../fonts/Tilt_Neon/TiltNeon-Regular-VariableFont_XROT,YROT.ttf');
+}
+
+html,body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Tilt_Neon', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    background-color: black;
+}

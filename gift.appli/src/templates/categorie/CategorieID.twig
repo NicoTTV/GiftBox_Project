@@ -1,0 +1,8 @@
+{% extends "base.twig" %}
+
+{% block main %}
+    <h1>Categorie {{ id }}</h1>
+    <h3>{{ libelle | capitalize }}</h3>
+    <a href="{{ id }}/prestation">Prestation</a>
+{% endblock %}
+

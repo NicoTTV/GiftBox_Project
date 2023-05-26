@@ -1,0 +1,10 @@
+{% extends "base.twig" %}
+
+{% block main %}
+    {% for prestation in prestations %}
+        <h1>{{ prestation.libelle }}</h1>
+        <p>Description : {{ prestation.description }}</p>
+        <p>Unité : {{ prestation.unite }}</p>
+        <p>Tarif : {{ prestation.tarif }}</p>
+    {% endfor %}
+{% endblock %}
