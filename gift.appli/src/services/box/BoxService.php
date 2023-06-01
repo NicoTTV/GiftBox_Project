@@ -56,7 +56,7 @@ class BoxService
 
     }
 
-    public function ajoutPrestations()
+    public function ajoutPrestations(int $id_presta,int $id_coffret)
     {
 
     }

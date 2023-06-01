@@ -2,6 +2,7 @@
 
 use gift\app\actions\GetCategorieIdAction;
 use gift\app\actions\GetCategoriesAction;
+use gift\app\actions\GetConnexionAction;
 use gift\app\actions\GetMainAction;
 use gift\app\actions\GetNewBoxesAction;
 use gift\app\actions\GetPrestationsAction;
@@ -16,4 +17,5 @@ return function (App $app) {
     $app->get('/prestation', GetPrestationsAction::class)->setName('prestations');
     $app->get("/boxes/new",GetNewBoxesAction::class)->setName('boxes');
     $app->post("/boxes/new", GetNewBoxesAction::class);
+    $app->get("/connexion", GetConnexionAction::class)->setName("connexion");
 };
