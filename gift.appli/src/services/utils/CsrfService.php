@@ -13,7 +13,7 @@ class CsrfService
     public static function generate():string
     {
         try {
-            $token = random_bytes(64);
+            $token = bin2hex(random_bytes(64));
         } catch (Exception $e) {
             throw new ExceptionTokenGenerate();
         }
@@ -27,8 +27,8 @@ class CsrfService
     public static function check($token):void
     {
         $sessionToken = $_SESSION['csrf'];
-        if (!$token !== $sessionToken) {
-            unset($_SESSION['csrf']);
+        unset($_SESSION['csrf']);
+        if ($token !== $sessionToken) {
             throw new ExceptionTokenVerify();
         }
     }
