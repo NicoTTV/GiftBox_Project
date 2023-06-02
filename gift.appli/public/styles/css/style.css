@@ -18,5 +18,21 @@ body {
     font-size: 16px;
     line-height: 1.5;
     color: #333;
-    background-color: black;
+}
+
+.container {
+    background-color: #2F3C7E;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    padding: 10px 10px 10px 10px;
+}
+
+.div-header {
+    display: inline-block;
+    background-color: #FBEAEB;
+    margin-left: 10px;
+    margin-right: 10px;
+
 }

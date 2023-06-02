@@ -8,7 +8,7 @@ use Slim\Views\TwigMiddleware;
 $app = AppFactory::create();
 $app->addRoutingMiddleware();
 $app->addErrorMiddleware(true,false,false);
-$app->setBasePath('/projet/GiftBox_Project/gift.appli/public');
+$app->setBasePath('/Gift_Box_Project/gift.appli/public');
 $twig = Twig::create(ROOT.'templates/',['cache' => ROOT.'templates/compiled/','auto_reload' => true]);
 $app->add(TwigMiddleware::create($app, $twig));
 DB::initConnection();

@@ -10,6 +10,7 @@ use Slim\Exception\HttpInternalServerErrorException;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
+use Slim\Routing\RouteContext;
 use Slim\Views\Twig;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -23,11 +24,15 @@ class GetCategoriesAction extends AbstractAction
 
     public function __invoke(Request $rq, Response $rs, $args): Response
     {
+        $routeContext = RouteContext::fromRequest($rq);
+        $routeParser = $routeContext->getRouteParser();
+        $routeParser->urlFor('formulaire');
+
         $prestationsService = new PrestationsService();
         try {
             $categories = $prestationsService->getCategories();
         } catch (CategorieNotFoundException $e) {
-            throw new HttpNotFoundException($rq, "Il n'y à pas de catégories");
+            throw new HttpNotFoundException($rq, "Il n'y a pas de catégories");
         }
         $restauration = $categories[0];
         $hebergement = $categories[1];
