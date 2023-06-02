@@ -1,13 +1,3 @@
-@font-face {
-    font-family: 'Bruno Ace';
-    src: url('../../fonts/Bruno_Ace/BrunoAceSC-Regular.ttf'); format("opentype");
-}
-
-@font-face {
-    font-family: "Tilt_Neon";
-    src: url("../../fonts/Tilt_Neon/TiltNeon-Regular-VariableFont_XROT,YROT.ttf") format("opentype");
-}
-
 main {
     background-color: #ffffff;
     color: #000;
@@ -84,7 +74,7 @@ input,label {
     width: 100%;
     border-radius: 10px;
     position: relative;
-    background-color: #eef3f7;
+    background-color: #FBEAEB;
 }
 
 .sign .input-box .input-box-item {
@@ -159,7 +149,7 @@ input,label {
     position: absolute;
     width: 100px;
     height: 5px;
-    background: linear-gradient(#67a2ea, #338cdd);
+    background: #2F3C7E;
     border: none;
     bottom: 0;
     z-index: -1;
@@ -180,12 +170,20 @@ input,label {
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: 100%;
     margin-top: 1em;
+    width: 180px;
     position: relative;
     z-index: 2;
     justify-content: flex-start;
-    transition: all .3s ease;
+}
+
+.sign .remember label {
+    font-size: 1.1em;
+    transition: all .4s ease;
+}
+
+.sign .remember label:hover {
+    color: #2F3C7E;
 }
 
 .sign-up {

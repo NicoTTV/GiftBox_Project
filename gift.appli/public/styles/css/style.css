@@ -1,11 +1,11 @@
 @font-face {
     font-family: 'Bruno Ace';
-    src: url('BrunoAceSC-Regular.ttf');
+    src: url('../fonts/Bruno_Ace/BrunoAceSC-Regular.ttf'); format("opentype");
 }
 
 @font-face {
-    font-family: 'Tilt_Neon';
-    src: url('TiltNeon-Regular-VariableFont_XROT,YROT.ttf');
+    font-family: "Tilt_Neon";
+    src: url("../fonts/Tilt_Neon/TiltNeon-Regular-VariableFont_XROT,YROT.ttf") format("opentype");
 }
 
 html,body {
