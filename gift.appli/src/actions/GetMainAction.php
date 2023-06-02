@@ -23,6 +23,7 @@ class GetMainAction extends AbstractAction
         $routeParser->urlFor('prestations');
         $routeParser->urlFor('boxes');
         $routeParser->urlFor('home');
+        $routeParser->urlFor('connexion');
         try {
             return $view->render($rs, 'index.twig');
         } catch (LoaderError|RuntimeError|SyntaxError $e) {

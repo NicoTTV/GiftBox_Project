@@ -96,18 +96,18 @@ class PrestationsService
 
     /**
      * @throws PrestationUpdateFailException
-     * @throws DonneesException
+     * @throws PrestationsServiceBadDataException
      */
     public function createCategorie(array $categ):int
     {
-        if ($categ['libelle'] !== filter_var($categ['libelle'],FILTER_SANITIZE_FULL_SPECIAL_CHARS)
-            && $categ['description'] !== filter_var($categ['description'],FILTER_SANITIZE_FULL_SPECIAL_CHARS))
-            throw new DonneesException();
+        if ($categ['libelle'] !== filter_var($categ['libelle'],FILTER_SANITIZE_FULL_SPECIAL_CHARS))
+            throw new PrestationsServiceBadDataException("Bad data : libelle");
+
+        if ($categ['description'] !== filter_var($categ['description'],FILTER_SANITIZE_FULL_SPECIAL_CHARS))
+            throw new PrestationsServiceBadDataException("Bad data : description");
 
         try {
-            $categorie = new Categorie();
-            $categorie->libelle = $categ['libelle'];
-            $categorie->description = $categ['description'];
+            $categorie = new Categorie($categ);
             $categorie->saveOrFail();
             return $categorie->id;
         } catch (Throwable) {
