@@ -1,3 +1,4 @@
 /vendor
 /templates/compiled
 /conf/gift.db.conf.ini
+/conf/Bootstrap.php
