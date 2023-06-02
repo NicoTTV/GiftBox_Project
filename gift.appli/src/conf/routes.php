@@ -2,6 +2,8 @@
 
 use gift\app\actions\GetCategorieIdAction;
 use gift\app\actions\GetCategoriesAction;
+use gift\app\actions\GetConnexionAction;
+use gift\app\actions\GetFormulaireAction;
 use gift\app\actions\GetMainAction;
 use gift\app\actions\GetNewBoxesAction;
 use gift\app\actions\GetPrestationsAction;
