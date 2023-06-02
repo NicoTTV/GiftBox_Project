@@ -4,8 +4,11 @@
 
 <div class="ajoutCategorie">
     <p>Création d'une nouvelle catégorie :</p>
-    <input name="nomCategorie" type="text">
+    <input name="nomCategorie" type="text" placeholder="nom">
+    <input name="descCategorie" type="text" placeholder="catégorie">
     <button name="submit">Ajouter</button>
+    <input value="{{csrf}}" name="csrf" type="hidden">
+
 </div>
 
 {% endblock %}
