@@ -10,7 +10,7 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-class GetFormulaireAction extends AbstractAction
+class GetAjoutCategorieAction extends AbstractAction
 {
     public function __invoke(Request $rq, Response $rs, $args): Response
     {
