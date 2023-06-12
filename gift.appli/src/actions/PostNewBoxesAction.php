@@ -29,7 +29,7 @@ class PostNewBoxesAction extends AbstractAction
             'libelle' => $post_data['nomBox'],
             'description' => $post_data['descBox'],
             'message_kdo' => $post_data['mCadeau'],
-            'kdo' => $post_data['cadeau'],
+            'kdo' => $post_data['cadeau'] ?? 0,
             'url' => $routeParser->urlFor('boxes')
         ];
 
