@@ -18,6 +18,10 @@
                 <div class="card-attribute">
                     <span>{{ categorie.tarif }}</span>
                     <span>{{ categorie.unite }}</span>
+                    <form action = "{{url_for("PrestaAdd")}}" method = 'post'  >
+                    <button class="btn btn-primary">Ajouter</button>
+                    <input type="hidden" name="id" value="{{ categorie.id }}">
+                    </form>
                     <a href="{{ url_for('categ2prestas',{'id':categorie.id}) }}"></a>
                 </div>
             </div>

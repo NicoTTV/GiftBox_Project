@@ -7,5 +7,5 @@
             <li><a href="{{ url_for('categorieId', { 'id':categorie.id }) }}" >{{ categorie.libelle | capitalize }}</a></li>
         {% endfor %}
     </ul>
-    <a href="{{ url_for('formulaire') }}">Formulaire</a>
+    <a href="{{ url_for('formulaireCateg') }}">Formulaire</a>
 {% endblock %}
