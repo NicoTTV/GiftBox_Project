@@ -1,5 +1,6 @@
 <?php
 
+use gift\app\actions\GetBoxesAction;
 use gift\app\actions\GetCategorieIdAction;
 use gift\app\actions\GetCategoriesAction;
 use gift\app\actions\GetConnexionAction;
@@ -19,7 +20,7 @@ return function (App $app) {
     $app->get('/catgories/formulaire', GetAjoutCategorieAction::class)->setName('formulaire');
     $app->post('/categories/formulaire', PostAjoutCategorieAction::class)->setName('catCreate');
     $app->get('/prestation', GetPrestationsAction::class)->setName('prestations');
-    $app->get("/boxes/new",GetNewBoxesAction::class)->setName('boxes');
-    $app->post("/boxes/new", GetNewBoxesAction::class);
+    $app->get("/boxes/new",GetNewBoxesAction::class)->setName('formulaireBoxe');
+    $app->get("/boxes",GetBoxesAction::class)->setName('boxes');
     $app->get("/connexion", GetConnexionAction::class)->setName("connexion");
 };
