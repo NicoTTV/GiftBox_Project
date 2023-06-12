@@ -1,5 +1,6 @@
 <?php
 
+use gift\app\actions\GetBoxesAction;
 use gift\app\actions\GetCategorieIdAction;
 use gift\app\actions\GetCategoriesAction;
 use gift\app\actions\GetConnexionAction;

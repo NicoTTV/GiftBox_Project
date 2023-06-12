@@ -51,9 +51,9 @@ class BoxService
         }
     }
 
-    public function affichage()
+    public function affichage():array
     {
-
+        return Box::all()->toArray();
     }
 
     public function ajoutPrestations(int $id_presta,int $id_coffret)

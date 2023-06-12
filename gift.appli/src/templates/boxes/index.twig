@@ -1,0 +1,10 @@
+{% extends "base.twig" %}
+
+{% block main %}
+    <ul>
+    {% for box in boxes %}
+        <li><a href="">{{ box.libelle }}</a></li>
+    {% endfor %}
+    </ul>
+{% endblock %}
+
