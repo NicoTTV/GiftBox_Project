@@ -18,9 +18,9 @@ class BoxService
      * @throws BoxServiceBadDataException
      * @throws BoxUpdateFailException
      */
-    public function creation(array $cadeau): void
+    public function creation(array $cadeau): string
     {
-        if (isset($cadeau['libelle']) && isset($cadeau['description']))
+        if (!isset($cadeau['libelle']) && !isset($cadeau['description']))
             throw new BoxServiceBadDataException('Bad data: libelle and description');
 
         if ($cadeau['libelle'] !== filter_var($cadeau['libelle'],FILTER_SANITIZE_FULL_SPECIAL_CHARS))
@@ -29,17 +29,21 @@ class BoxService
         if ($cadeau['description'] !== filter_var($cadeau['description'],FILTER_SANITIZE_FULL_SPECIAL_CHARS))
             throw new BoxServiceBadDataException("Bad data : description");
 
-        if ($cadeau['kdo+message_kdo'] !== filter_var($cadeau['kdo+message_kdo'],FILTER_SANITIZE_FULL_SPECIAL_CHARS))
-            throw new BoxServiceBadDataException("Bad data : libelle");
+        if ($cadeau['kdo'] !== filter_var($cadeau['kdo'],FILTER_SANITIZE_NUMBER_INT))
+            throw new BoxServiceBadDataException("Bad data : kdo");
+
+        if ($cadeau['message_kdo'] !== filter_var($cadeau['message_kdo'],FILTER_SANITIZE_FULL_SPECIAL_CHARS))
+            throw new BoxServiceBadDataException("Bad data : message_kdo");
 
         if ($cadeau['url'] !== filter_var($cadeau['url'],FILTER_SANITIZE_URL) && !filter_var($cadeau['url'],FILTER_VALIDATE_URL))
-            throw new BoxServiceBadDataException("Bad data : description");
+            throw new BoxServiceBadDataException("Bad data : url");
 
         try {
             $newBox = new Box($cadeau);
             $newBox->montant = 0;
             try {
                 $newBox->token = bin2hex(random_bytes(64));
+                $url = $cadeau['url'].'/'.$newBox->token;
             } catch (Exception) {
                 throw new BoxUpdateFailException('Token error');
             }
@@ -49,6 +53,7 @@ class BoxService
         } catch (Throwable) {
             throw new BoxUpdateFailException();
         }
+        return $url;
     }
 
     public function affichage():array

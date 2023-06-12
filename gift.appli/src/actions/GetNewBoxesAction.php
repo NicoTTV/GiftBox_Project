@@ -5,6 +5,8 @@ namespace gift\app\actions;
 use gift\app\services\box\BoxService;
 use gift\app\services\prestations\PrestationNotFoundException;
 use gift\app\services\prestations\PrestationsService;
+use gift\app\services\utils\CsrfService;
+use gift\app\services\utils\ExceptionTokenGenerate;
 use Slim\Exception\HttpInternalServerErrorException;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Psr7\Request;
@@ -25,11 +27,16 @@ class GetNewBoxesAction extends AbstractAction
     {
         $routeContext = RouteContext::fromRequest($rq);
         $routeParser = $routeContext->getRouteParser();
-        $routeParser->urlFor('boxes');
+        $routeParser->urlFor('boxCreate');
+        try {
+            $csrf = CsrfService::generate();
+        } catch (ExceptionTokenGenerate $e) {
+            throw new HttpInternalServerErrorException($rq);
+        }
         $twig = Twig::fromRequest($rq);
         try {
-            return $twig->render($rs, 'boxes/creationCoffret.twig');
-        } catch (LoaderError|RuntimeError|SyntaxError $e) {
+            return $twig->render($rs, 'boxes/creationCoffret.twig', ['csrf' => $csrf]);
+        } catch (LoaderError|RuntimeError|SyntaxError) {
             throw new HttpInternalServerErrorException($rq);
         }
     }
