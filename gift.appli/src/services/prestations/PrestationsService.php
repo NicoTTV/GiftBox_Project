@@ -7,6 +7,7 @@ use gift\app\models\Prestation;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Throwable;
+use gift\app\services\exceptions\PrestationUpdateFailException;
 
 class PrestationsService
 {
@@ -107,7 +108,9 @@ class PrestationsService
             throw new PrestationsServiceBadDataException("Bad data : description");
 
         try {
-            $categorie = new Categorie($categ);
+            $categorie = new Categorie();
+            $categorie->libelle = $categ['libelle'];
+            $categorie->description = $categ['description'];
             $categorie->saveOrFail();
             return $categorie->id;
         } catch (Throwable) {

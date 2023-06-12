@@ -1,6 +1,6 @@
 <?php
 
-namespace gift\app\services\prestations;
+namespace gift\app\services\exceptions;
 
 class PrestationUpdateFailException extends \Exception
 {
