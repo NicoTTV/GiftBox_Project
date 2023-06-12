@@ -2,10 +2,26 @@
 
 {% block main %}
     <h1>Prestations</h1>
-    <ul>
+    <div class="content">
         {% for categorie in categories %}
-            <li><a href="{{ url_for('categ2prestas',{'id':categorie.id}) }}">{{ categorie.libelle | capitalize }}</a></li>
+            <div class="div-content">
+                <div class="image-content">
+                    <img src="{{ base_path() }}/../../shared/img/{{ categorie.img }}"
+                         alt="{{ categorie.libelle | capitalize }}">
+                </div>
+                
+                <div class="main-content">
+                    <span class="title">{{ categorie.libelle | capitalize }}</span>
+                    <span class="desc">{{ categorie.description | capitalize }}</span>
+                </div>
+                
+                <div class="card-attribute">
+                    <span>{{ categorie.tarif }}</span>
+                    <span>{{ categorie.unite }}</span>
+                    <a href="{{ url_for('categ2prestas',{'id':categorie.id}) }}"></a>
+                </div>
+            </div>
         {% endfor %}
-    </ul>
+    </div>
 {% endblock %}
 
