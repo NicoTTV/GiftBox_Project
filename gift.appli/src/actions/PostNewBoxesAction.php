@@ -11,7 +11,7 @@ use Slim\Psr7\Response;
 use gift\app\services\prestations\PrestationsService;
 use Slim\Routing\RouteContext;
 
-class PostNewBoxexAction extends AbstractAction{
+class PostNewBoxesAction extends AbstractAction{
     public function __invoke(Request $rq, Response $rs, $args): Response
     {
         $post_data = $rq->getParsedBody();
