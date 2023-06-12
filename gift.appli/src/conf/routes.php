@@ -20,6 +20,6 @@ return function (App $app) {
     $app->post('/categories/formulaire', PostAjoutCategorieAction::class)->setName('catCreate');
     $app->get('/prestation', GetPrestationsAction::class)->setName('prestations');
     $app->get("/boxes/new",GetNewBoxesAction::class)->setName('boxes');
-    $app->post("/boxes/new", GetNewBoxesAction::class);
+    $app->post("/boxes/new", PostNewBoxesAction::class)->setName('boxCreate');
     $app->get("/connexion", GetConnexionAction::class)->setName("connexion");
 };

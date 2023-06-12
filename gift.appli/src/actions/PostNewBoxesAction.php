@@ -2,6 +2,7 @@
 
 namespace gift\app\actions;
 
+use gift\app\services\box\BoxService;
 use gift\app\services\utils\CsrfService;
 use gift\app\services\utils\ExceptionTokenVerify;
 use Slim\Exception\HttpInternalServerErrorException;
@@ -16,21 +17,22 @@ class PostAjoutCategorieAction extends AbstractAction{
         $post_data = $rq->getParsedBody();
         $routeContext = RouteContext::fromRequest($rq);
         $routeParser = $routeContext->getRouteParser();
-        $routeParser->urlFor('categories');
+        $routeParser->urlFor('boxes');
         $token = $post_data['csrf'];
         try{ CsrfService::check($token);
         } catch (ExceptionTokenVerify $e) {
           throw new HttpInternalServerErrorException($rq);
         };
-            $categ_data = [
-                'libelle' => $post_data['nomCategorie'],
-                'description' => $post_data['descCategorie'],
+            $box_data = [
+                'libelle' => $post_data['nomBox'],
+                'description' => $post_data['descBox'],
+                'message_kdo' => $post_data['mCadeau'],
+                'kdo' => $post_data['cadeau'],
             ];
-            $prestationsService = new PrestationsService();
-        
-                $prestationsService->createCategorie($categ_data);
+$boxService = new BoxService();        
+                $boxService->creation($box_data);
             
-                return $rs->withStatus(302)->withHeader('Location', $routeParser->urlFor('categories'));
+                return $rs->withStatus(302)->withHeader('Location', $routeParser->urlFor('boxes'));
        
         
         }
