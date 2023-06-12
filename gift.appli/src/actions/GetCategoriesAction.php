@@ -34,14 +34,10 @@ class GetCategoriesAction extends AbstractAction
         } catch (CategorieNotFoundException $e) {
             throw new HttpNotFoundException($rq, "Il n'y a pas de catégories");
         }
-        $restauration = $categories[0];
-        $hebergement = $categories[1];
-        $attention = $categories[2];
-        $activite = $categories[3];
-        $data = ["restauration" => $restauration,
-            "hebergement" => $hebergement,
-            "attention" =>  $attention,
-            "activite" =>  $activite];
+        $routeParser->urlFor('categorieId', ['id' => 0]);
+        $data = [
+            "categories" => $categories
+        ];
         $twig = Twig::fromRequest($rq);
         try {
             return $twig->render($rs, 'categorie/index.twig', $data);

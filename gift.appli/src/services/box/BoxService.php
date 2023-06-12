@@ -58,7 +58,7 @@ class BoxService
 
     public function ajoutPrestations(int $id_presta,int $id_coffret)
     {
-
+        Box::findOrFail($id_coffret);
     }
 
     public function retraitPrestations()

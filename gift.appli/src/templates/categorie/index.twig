@@ -3,10 +3,9 @@
 {% block main %}
     <h1>Categories</h1>
     <ul>
-        <li>1. <a href="categories/1">{{ restauration.libelle | capitalize }}</a></li>
-        <li>2. <a href="categories/2">{{ hebergement.libelle | capitalize }}</a></li>
-        <li>3. <a href="categories/3">{{ attention.libelle | capitalize }}</a></li>
-        <li>4. <a href="categories/4">{{ activite.libelle | capitalize }}</a></li>
+        {% for categorie in categories %}
+            <li><a href="{{ url_for('categorieId', { 'id':categorie.id }) }}" >{{ categorie.libelle | capitalize }}</a></li>
+        {% endfor %}
     </ul>
     <a href="{{ url_for('formulaire') }}">Formulaire</a>
 {% endblock %}

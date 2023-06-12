@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 const ROOT = __DIR__ . "/../src/";
-
+session_start();
 require_once ROOT . 'vendor/autoload.php';
 
 /* application boostrap */

@@ -4,10 +4,12 @@
 
 <div class="ajoutCategorie">
     <p>Création d'une nouvelle catégorie :</p>
+    <form action="{{url_for("catCreate")}}" method="post">
     <input name="nomCategorie" type="text" placeholder="nom">
     <input name="descCategorie" type="text" placeholder="catégorie">
     <button name="submit">Ajouter</button>
     <input value="{{csrf}}" name="csrf" type="hidden">
+    </form>
 </div>
 
 {% endblock %}
