@@ -20,6 +20,10 @@ body {
     color: #333;
 }
 
+header {
+
+}
+
 .container {
     background-color: #2F3C7E;
     text-align: center;
@@ -32,7 +36,41 @@ body {
 .div-header {
     display: inline-block;
     background-color: #FBEAEB;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 120px;
+    margin-right: 120px;
+    padding: 10px 20px 10px 20px;
+}
+
+.div-header a {
+    text-decoration: none;
+    color: #2F3C7E;
+}
+
+.logo a {
+    font-size: 36px;
+}
+
+#sign {
+    display: inline;
+}
+
+.menuAccueil {
+    text-align: center;
+}
+
+.menuAccueil a {
+    background-color: #2F3C7E;
+    color: white;
+    text-decoration: none;
+    padding: 10px 80px 10px 80px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+h1 {
+
+}
+
+h2 {
 
 }
