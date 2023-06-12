@@ -11,19 +11,16 @@
 <body>
 <header>
     <div class="container">
-        <div id="1" class="div-header">
-            <div class="logo"><a href="{{ url_for('home') }}">Le site de cadeaux</a></div>
+        <div class="div-header">
+            <img src="../../../shared/img/logo.jpg" style="width: 46px; height: 56px">
+            <div class="logo"><a href="{{ url_for('home') }}">GiftBox</a></div>
         </div>
-        <div id="2" class="div-header">
-            <span>Categories</span>
-            <span>Prestation</span>
-            <span>Boxes</span>
+        <div class="div-header">
+            <input name="recherche" placeholder="Recherche ...">
         </div>
-        <div class="right">
-            <div class="sign">
-                <div class="signin"><a href="">Se connecter</a></div>
-                <div class="signup"><a href="">S'inscrire</a></div>
-            </div>
+        <div class="div-header">
+            <div id="sign" class="signin"><a href="">Se connecter</a></div>
+            <div id="sign" class="signup"><a href="">S'inscrire</a></div>
         </div>
     </div>
 </header>

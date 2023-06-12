@@ -2,11 +2,11 @@
 
 {% block main %}
     <h1>Gift</h1>
-    <p>Le site de cadeaux</p>
-    <ul>
-        <li><a href="{{ url_for('categories') }}">Categories</a></li>
-        <li><a href="{{ url_for('prestations') }}">Prestation</a></li>
-        <li><a href="{{ url_for('boxes') }}">Boxes</a></li>
-    </ul>
+    <h2>Le site de cadeaux</h2>
+    <div class="menuAccueil">
+        <a href="{{ url_for('categories') }}">Categories</a>
+        <a href="{{ url_for('prestations') }}">Prestation</a>
+        <a href="{{ url_for('boxes') }}">Boxes</a>
+    </div>
 {% endblock %}
 
