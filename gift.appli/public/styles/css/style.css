@@ -73,4 +73,67 @@ h1 {
 
 h2 {
 
+main .content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 4em 2em;
+    justify-content: center;
+    align-items: center;
+    margin: 0 4em;
 }
+
+.div-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 300px;
+    width: 300px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 5px 10px 2px;
+    overflow: hidden;
+}
+
+.div-content img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.div-content .image-content {
+    display: flex;
+    width: 100%;
+    max-height: 8em;
+    overflow: hidden;
+}
+
+.div-content .main-content {
+    color: black;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.div-content .card-attribute {
+    color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.div-content .title {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.div-content .desc {
+    font-size: 1em;
+}
+
