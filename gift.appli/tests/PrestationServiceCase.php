@@ -69,7 +69,6 @@ final class PrestationServiceTest extends TestCase
 
     }
 
-
     public function testgetCategories(): void
     {
 
@@ -112,8 +111,4 @@ final class PrestationServiceTest extends TestCase
         $this->expectException(\gift\app\services\prestations\PrestationsServiceNotFoundException::class);
         $prestationService->getPrestationById('AAAAAAA');
     }
-
-
-
-}
 }
