@@ -2,5 +2,15 @@
 
 
 {% block main %}
-    
+    <div class="ajoutBoxe">
+        <p>Création d'une nouvelle boxe :</p>
+        <form action="{{ url_for("boxCreate") }}" method="post">
+            <input name="nomBox" type="text" placeholder="nom">
+            <input name="descBox" type="text" placeholder="catégorie">
+            <input name="mCadeau" type="text" placeholder="kdo">
+            <input name="cadeau" type="checkbox" value="1">
+            <button name="submit">Ajouter</button>
+            <input value="{{ csrf }}" name="csrf" type="hidden">
+        </form>
+    </div>
 {% endblock %}

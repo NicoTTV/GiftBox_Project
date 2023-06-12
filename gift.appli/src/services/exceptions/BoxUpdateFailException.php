@@ -1,6 +1,6 @@
 <?php
 
-namespace gift\app\services\box;
+namespace gift\app\services\Exceptions;
 
 use Exception;
 

@@ -4,6 +4,7 @@ namespace gift\app\actions;
 
 use gift\app\services\utils\CsrfService;
 use gift\app\services\utils\ExceptionTokenVerify;
+use Slim\Exception\HttpInternalServerErrorException;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 use gift\app\services\prestations\PrestationsService;
@@ -19,7 +20,7 @@ class PostAjoutCategorieAction extends AbstractAction{
         $token = $post_data['csrf'];
         try{ CsrfService::check($token);
         } catch (ExceptionTokenVerify $e) {
-          
+          throw new HttpInternalServerErrorException($rq);
         };
             $categ_data = [
                 'libelle' => $post_data['nomCategorie'],

@@ -2,8 +2,17 @@
 
 namespace gift\app\actions;
 
+use gift\app\services\box\BoxService;
+use gift\app\services\prestations\PrestationNotFoundException;
+use gift\app\services\prestations\PrestationsService;
+use Slim\Exception\HttpNotFoundException;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
+use Slim\Routing\RouteContext;
+use Slim\Views\Twig;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class GetNewBoxesAction extends AbstractAction
 {
@@ -13,28 +22,19 @@ class GetNewBoxesAction extends AbstractAction
      */
     public function __invoke(Request $rq, Response $rs, $args): Response
     {
-        $inputPostText = "";
-        $requestMethode = $rq->getMethod();
-        if (strtolower($requestMethode) === "post") {
-            $inputPostText = "{$rq->getParsedBody()['something']}";
+        $routeContext = RouteContext::fromRequest($rq);
+        $routeParser = $routeContext->getRouteParser();
+        $routeParser->urlFor('boxCreate');
+        try {
+            $csrf = CsrfService::generate();
+        } catch (ExceptionTokenGenerate $e) {
+            throw new HttpInternalServerErrorException($rq);
         }
-        $html = <<<END
-                <!DOCTYPE html>
-                <html lang="fr">
-                <head>
-                    <meta charset="UTF-8">
-                    <title>Gift</title>
-                </head>
-                <body>
-                <form action="" method="post">
-                    <label for="input">Ecrivez quelque chose</label>
-                    <input id="input" type="text" name="something">
-                    <p>Le texte est {$inputPostText}</p>
-                </form>
-                </body>
-                </html>
-                END;
-        $rs->getBody()->write($html);
-        return $rs;
+        $twig = Twig::fromRequest($rq);
+        try {
+            return $twig->render($rs, 'boxes/creationCoffret.twig', ['csrf' => $csrf]);
+        } catch (LoaderError|RuntimeError|SyntaxError) {
+            throw new HttpInternalServerErrorException($rq);
+        }
     }
 }
