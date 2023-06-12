@@ -66,8 +66,17 @@ class BoxService
         return Box::all()->toArray();
     }
 
-    public function ajoutPrestations(int $id_presta,int $id_coffret)
+    /**
+     * @throws BoxServiceBadDataException
+     */
+    public function ajoutPrestations(int $id_presta, int $id_coffret)
     {
+        if ($id_presta !== filter_var($id_presta,FILTER_SANITIZE_NUMBER_INT))
+            throw new BoxServiceBadDataException("Bad data : id_presta");
+
+        if ($id_coffret !== filter_var($id_coffret,FILTER_SANITIZE_NUMBER_INT))
+            throw new BoxServiceBadDataException("Bad data : id_coffret");
+
         $box = Box::findOrFail($id_coffret);
         $box->ajouterPrestation($id_presta);
     }
