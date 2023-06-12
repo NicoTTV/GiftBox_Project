@@ -3,7 +3,7 @@
 namespace gift\app\actions;
 
 use gift\app\services\box\BoxService;
-use gift\app\services\box\BoxUpdateFailException;
+use gift\app\services\Exceptions\BoxUpdateFailException;
 use gift\app\services\Exceptions\BoxServiceBadDataException;
 use gift\app\services\utils\CsrfService;
 use gift\app\services\utils\ExceptionTokenVerify;
@@ -37,7 +37,8 @@ class PostNewBoxesAction extends AbstractAction
         try {
             $url = $boxService->creation($box_data);
         } catch (BoxServiceBadDataException|BoxUpdateFailException $e) {
-            throw new HttpInternalServerErrorException($rq);
+            echo $e->getMessage();
+            die();
         }
         return $rs->withStatus(302)->withHeader('Location', $routeParser->urlFor('boxes'));
     }

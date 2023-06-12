@@ -5,7 +5,8 @@ namespace gift\app\services\box;
 use Exception;
 use gift\app\models\Box;
 use gift\app\services\Exceptions\BoxServiceBadDataException;
-use gift\app\services\prestations\PrestationsServiceBadDataException;
+use gift\app\services\Exceptions\BoxUpdateFailException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Ramsey\Uuid\Uuid;
 use Throwable;
 
@@ -39,7 +40,11 @@ class BoxService
             throw new BoxServiceBadDataException("Bad data : url");
 
         try {
-            $newBox = new Box($cadeau);
+            $newBox = new Box();
+            $newBox->libelle = $cadeau['libelle'];
+            $newBox->description = $cadeau['description'];
+            $newBox->kdo = $cadeau['kdo'];
+            $newBox->message_kdo = $cadeau['message_kdo'];
             $newBox->montant = 0;
             try {
                 $newBox->token = bin2hex(random_bytes(64));
@@ -50,7 +55,7 @@ class BoxService
             $newBox->statut = Box::CREATED;
             $newBox->id = Uuid::uuid4()->toString();
             $newBox->saveOrFail();
-        } catch (Throwable) {
+        } catch (ModelNotFoundException) {
             throw new BoxUpdateFailException();
         }
         return $url;
