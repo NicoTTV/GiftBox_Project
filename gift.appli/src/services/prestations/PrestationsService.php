@@ -65,7 +65,7 @@ class PrestationsService
     public function getPrestations():array
     {
         try {
-            return Categorie::has('prestation')->get()->toArray();
+            return Prestation::get()->toArray();
         } catch (ModelNotFoundException) {
             throw new PrestationNotFoundException();
         }
