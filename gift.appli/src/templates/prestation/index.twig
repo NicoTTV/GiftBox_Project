@@ -1,7 +1,7 @@
 {% extends "base.twig" %}
 
 {% block main %}
-    <h1>Prestations</h1>
+    <h1 id="title-section">Prestations</h1>
     <div class="content">
         {% for categorie in categories %}
             <div class="div-content">
@@ -16,7 +16,7 @@
                 </div>
                 
                 <div class="card-attribute">
-                    <span>{{ categorie.tarif }}</span>
+                    <span id="tarif">{{ categorie.tarif }} <span class="material-symbols-rounded euro">euro_symbol</span> </span>
                     <span>{{ categorie.unite }}</span>
                     <form action = "{{url_for("PrestaAdd")}}" method = 'post'  >
                     <button class="btn btn-primary">Ajouter</button>
@@ -24,6 +24,7 @@
                     </form>
                     <a href="{{ url_for('categ2prestas',{'id':categorie.id}) }}"></a>
                 </div>
+                <a href="{{ url_for('categ2prestas',{'id':categorie.id}) }}" id="moreDetails">Plus de détails</a>
             </div>
         {% endfor %}
     </div>
