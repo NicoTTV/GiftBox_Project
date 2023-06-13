@@ -30,7 +30,7 @@ class BoxService
         if ($cadeau['description'] !== filter_var($cadeau['description'],FILTER_SANITIZE_FULL_SPECIAL_CHARS))
             throw new BoxServiceBadDataException("Bad data : description");
 
-        if ($cadeau['kdo'] !== filter_var($cadeau['kdo'],FILTER_SANITIZE_NUMBER_INT))
+        if (!isset($cadeau['kdo']) && $cadeau['kdo'] !== 0 && $cadeau['kdo'] !== 1)
             throw new BoxServiceBadDataException("Bad data : kdo");
 
         if ($cadeau['message_kdo'] !== filter_var($cadeau['message_kdo'],FILTER_SANITIZE_FULL_SPECIAL_CHARS))

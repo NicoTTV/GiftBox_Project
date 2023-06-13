@@ -29,6 +29,6 @@ class Box extends Model
 
     public function prestation(): BelongsToMany
     {
-        return $this->belongsToMany(Prestation::class, 'box_prestation', 'box_id', 'presta_id')->withPivot('quantite');
+        return $this->belongsToMany(Prestation::class, 'box2presta', 'box_id', 'presta_id')->withPivot('quantite');
     }
 }
