@@ -26,7 +26,7 @@ class GetCategoriesAction extends AbstractAction
     {
         $routeContext = RouteContext::fromRequest($rq);
         $routeParser = $routeContext->getRouteParser();
-        $routeParser->urlFor('formulaire');
+        $routeParser->urlFor('formulaireCateg');
 
         $prestationsService = new PrestationsService();
         try {

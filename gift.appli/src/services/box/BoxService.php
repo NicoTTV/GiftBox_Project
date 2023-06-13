@@ -55,9 +55,11 @@ class BoxService
             $newBox->statut = Box::CREATED;
             $newBox->id = Uuid::uuid4()->toString();
             $newBox->saveOrFail();
+            $_SESSION['box'] = $newBox->id;
         } catch (ModelNotFoundException) {
             throw new BoxUpdateFailException();
         }
+
         return $url;
     }
 
@@ -66,10 +68,7 @@ class BoxService
         return Box::all()->toArray();
     }
 
-    /**
-     * @throws BoxServiceBadDataException
-     */
-    public function ajoutPrestations(int $id_presta, int $id_coffret)
+    public function ajoutPrestations(string $id_presta,string $id_coffret)
     {
         if ($id_presta !== filter_var($id_presta,FILTER_SANITIZE_NUMBER_INT))
             throw new BoxServiceBadDataException("Bad data : id_presta");
@@ -78,7 +77,11 @@ class BoxService
             throw new BoxServiceBadDataException("Bad data : id_coffret");
 
         $box = Box::findOrFail($id_coffret);
-        $box->ajouterPrestation($id_presta);
+        if ($box->prestation()->find($id_presta) == null) {
+            $box->prestation()->attach($id_presta , ['quantite' => 1]);
+        } else {
+            $box->prestation()->updateExistingPivot($id_presta, ['quantite' => $box->prestation()->find($id_presta)->pivot->quantite + 1]);
+        }
     }
 
     public function retraitPrestations()

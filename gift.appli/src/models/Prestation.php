@@ -3,6 +3,7 @@
 namespace gift\app\models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Prestation extends Model
 {
@@ -11,4 +12,9 @@ class Prestation extends Model
     public $incrementing = false;
     protected $keyType = 'string';
     public $timestamps = false;
+
+    public function box(): BelongsToMany
+    {
+        return $this->belongsToMany(Prestation::class, 'box2presta', 'box_id', 'presta_id');
+    }
 }

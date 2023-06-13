@@ -15,16 +15,7 @@ class Box extends Model
 
     public function ajouterPrestation($idPrestation)
     {
-        $prestations = $this->prestation();
-        foreach ($prestations as $prestation) {
-            $this->montant += $prestation->tarif;
-            if ($prestation->id !== $idPrestation) {
-                $prestation = Prestation::findOrFail($idPrestation);
-                $this->prestation()->attach($idPrestation);
-            }
-            $prestation->pivot->quantite++;
-            $this->saveOrFail();
-        }
+        
     }
 
     public function prestation(): BelongsToMany
