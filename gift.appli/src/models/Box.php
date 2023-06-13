@@ -12,11 +12,7 @@ class Box extends Model
     protected $table = 'box';
     protected $primaryKey = 'id';
     protected $keyType = 'string';
-
-    public function ajouterPrestation($idPrestation)
-    {
-        
-    }
+    protected $fillable = ['montant'];
 
     public function prestation(): BelongsToMany
     {

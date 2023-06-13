@@ -1,6 +1,6 @@
 <?php
 
-namespace gift\tests\services\prestations;
+namespace gift\test\services\prestations;
 
 use Faker\Factory;
 use gift\app\models\Box;
@@ -44,8 +44,12 @@ class BoxServiceTest extends TestCase
     public static function tearDownAfterClass(): void
     {
         parent::tearDownAfterClass();
-        foreach (self::$boxes as $box) {
+        foreach (Box::all() as $box) {
             $box->delete();
+        }
+
+        foreach (Prestation::all() as $presta) {
+            $presta->delete();
         }
     }
     /**
@@ -62,8 +66,8 @@ class BoxServiceTest extends TestCase
         $message_kdo = $faker->sentence(10);
         $url = $faker->url;
 
-        $this->assertNotNull($boxService->creation(['libelle' => $libelle, 'description' => $description,
-            'kdo' => $kdo, 'message_kdo' => $message_kdo, 'url' => $url]));
+        $boxService->creation(['libelle' => $libelle, 'description' => $description,
+            'kdo' => $kdo, 'message_kdo' => $message_kdo, 'url' => $url]);
 
         $this->assertEquals($libelle,Box::latest()->first()->libelle);
         $this->assertEquals($description, Box::latest()->first()->description);
@@ -81,18 +85,29 @@ class BoxServiceTest extends TestCase
     {
         $boxService = new BoxService();
         $faker = Factory::create('fr_FR');
-        $idBox = $boxService->creation(['libelle' => $faker->word(), 'description' => $faker->sentence(5),
+        $boxService->creation(['libelle' => $faker->word(), 'description' => $faker->sentence(5),
             'kdo' => $faker->numberBetween(0,1), 'message_kdo' => $faker->sentence(10), 'url' => $faker->url]);
 
         $prestations = Prestation::all();
 
         $this->assertCount(4, $prestations);
 
+        $montant = 0;
+        $idBox = Box::latest()->first()->id;
         foreach ($prestations as $prestation) {
-            $boxService->ajoutPrestations($prestation->id, $idBox);
+            $boxService->ajoutPrestation($prestation->id, $idBox);
+            $montant += $prestation->tarif;
+            $this->assertEquals($prestation->id, Box::find($idBox)->prestation()->get()->last()->id);
         }
 
+        $this->assertEquals(1, Box::find($idBox)->prestation()->find($prestations->last()->id)->pivot->quantite);
 
+        $boxService->ajoutPrestation($prestations->last()->id, $idBox);
+        $montant += $prestations->last()->tarif;
+
+        $this->assertEquals(2, Box::find($idBox)->prestation()->find($prestations->last()->id)->pivot->quantite);
+
+        $this->assertEquals($montant, Box::find($idBox)->montant);
     }
 
 }
