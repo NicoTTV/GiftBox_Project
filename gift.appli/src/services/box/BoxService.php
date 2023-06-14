@@ -4,6 +4,7 @@ namespace gift\app\services\box;
 
 use Exception;
 use gift\app\models\Box;
+use gift\app\models\Prestation;
 use gift\app\services\Exceptions\BoxServiceBadDataException;
 use gift\app\services\Exceptions\BoxUpdateFailException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -30,7 +31,7 @@ class BoxService
         if ($cadeau['description'] !== filter_var($cadeau['description'],FILTER_SANITIZE_FULL_SPECIAL_CHARS))
             throw new BoxServiceBadDataException("Bad data : description");
 
-        if ($cadeau['kdo'] !== filter_var($cadeau['kdo'],FILTER_SANITIZE_NUMBER_INT))
+        if (!isset($cadeau['kdo']) && $cadeau['kdo'] !== 0 && $cadeau['kdo'] !== 1)
             throw new BoxServiceBadDataException("Bad data : kdo");
 
         if ($cadeau['message_kdo'] !== filter_var($cadeau['message_kdo'],FILTER_SANITIZE_FULL_SPECIAL_CHARS))
@@ -59,7 +60,6 @@ class BoxService
         } catch (ModelNotFoundException) {
             throw new BoxUpdateFailException();
         }
-
         return $url;
     }
 
@@ -68,7 +68,10 @@ class BoxService
         return Box::all()->toArray();
     }
 
-    public function ajoutPrestations(string $id_presta,string $id_coffret)
+    /**
+     * @throws BoxServiceBadDataException
+     */
+    public function ajoutPrestation(string $id_presta, string $id_coffret): void
     {
         if ($id_presta !== filter_var($id_presta,FILTER_SANITIZE_FULL_SPECIAL_CHARS))
             throw new BoxServiceBadDataException("Bad data : id_presta");
@@ -82,6 +85,8 @@ class BoxService
         } else {
             $box->prestation()->updateExistingPivot($id_presta, ['quantite' => $box->prestation()->find($id_presta)->pivot->quantite + 1]);
         }
+        $prestation = Prestation::findOrFail($id_presta);
+        $box->update(['montant' => $box->montant + $prestation->tarif]);
     }
 
     public function retraitPrestations()

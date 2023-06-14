@@ -21,7 +21,7 @@ class PostPrestationAdd extends AbstractAction
         $idPresta = $post_data['id'];
         $id =  $_SESSION['box'];
         $boxservice = new BoxService();
-        $boxservice->ajoutPrestations($idPresta,$id);
+        $boxservice->ajoutPrestation($idPresta,$id);
         
     return $rs->withStatus(302)->withHeader('Location', $routeParser->urlFor('prestations'));
 }
