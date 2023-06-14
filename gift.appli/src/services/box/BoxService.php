@@ -70,10 +70,10 @@ class BoxService
 
     public function ajoutPrestations(string $id_presta,string $id_coffret)
     {
-        if ($id_presta !== filter_var($id_presta,FILTER_SANITIZE_NUMBER_INT))
+        if ($id_presta !== filter_var($id_presta,FILTER_SANITIZE_FULL_SPECIAL_CHARS))
             throw new BoxServiceBadDataException("Bad data : id_presta");
 
-        if ($id_coffret !== filter_var($id_coffret,FILTER_SANITIZE_NUMBER_INT))
+        if ($id_coffret !== filter_var($id_coffret,FILTER_SANITIZE_FULL_SPECIAL_CHARS))
             throw new BoxServiceBadDataException("Bad data : id_coffret");
 
         $box = Box::findOrFail($id_coffret);

@@ -50,9 +50,14 @@ class PrestationsService
     /**
      * @throws PrestationNotFoundException
      */
-    public function getPrestationsByCategorie(int $categ_id)
+    public function getPrestationsByCategorie(int $categ_id, int $order = 2)
     {
         try {
+            if ($order == 0) {
+                return Categorie::findOrFail($categ_id)->prestation()->orderBy('tarif')->get()->toArray();
+            } elseif ($order == 1) {
+                return Categorie::findOrFail($categ_id)->prestation()->orderBy('tarif','DESC')->get()->toArray();
+            }
             return Categorie::findOrFail($categ_id)->prestation()->get()->toArray();
         } catch (ModelNotFoundException $e) {
             throw new PrestationNotFoundException();
