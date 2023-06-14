@@ -33,10 +33,6 @@ class GetPrestationsIdAction extends AbstractAction
            if(isset($get_data['tried'])){
             $prestations = $prestationsService->getPrestationsByCategorie($id,1);
            }
-            
-            
-            
-            
         } catch (PrestationNotFoundException $e) {
             throw new HttpNotFoundException($rq, "La prestation n'existe pas");
         }

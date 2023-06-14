@@ -56,6 +56,7 @@ class BoxService
             $newBox->statut = Box::CREATED;
             $newBox->id = Uuid::uuid4()->toString();
             $newBox->saveOrFail();
+
             $_SESSION['box'] = $newBox->id;
         } catch (ModelNotFoundException) {
             throw new BoxUpdateFailException();

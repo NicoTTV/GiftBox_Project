@@ -3,28 +3,24 @@
 {% block main %}
     <h1 id="title-section">Prestations</h1>
     <div class="content">
-        {% for categorie in categories %}
+        {% for prestation in prestations %}
             <div class="div-content">
-                <div class="image-content">
-                    <img src="{{ base_path() }}/../../shared/img/{{ categorie.img }}"
-                         alt="{{ categorie.libelle | capitalize }}">
-                </div>
-                
-                <div class="main-content">
-                    <span class="title">{{ categorie.libelle | capitalize }}</span>
-                    <span class="desc">{{ categorie.description | capitalize }}</span>
-                </div>
+                <img src="{{ base_path() }}/../../shared/img/{{ prestation.img }}"
+                     alt="{{ prestation.libelle | capitalize }}">
                 
                 <div class="card-attribute">
-                    <span id="tarif">{{ categorie.tarif }} <span class="material-symbols-rounded euro">euro_symbol</span> </span>
-                    <span>{{ categorie.unite }}</span>
-                    <form action = "{{url_for("PrestaAdd")}}" method = 'post'  >
-                    <button class="btn btn-primary">Ajouter</button>
-                    <input type="hidden" name="id" value="{{ categorie.id }}">
-                    </form>
-                    <a href="{{ url_for('categ2prestas',{'id':categorie.id}) }}"></a>
+                    <span class="title">{{ prestation.libelle | capitalize }}</span>
+                    <span id="tarif">{{ prestation.tarif }} <span
+                                class="material-symbols-rounded euro">euro_symbol</span> </span>
                 </div>
-                <a href="{{ url_for('categ2prestas',{'id':categorie.id}) }}" id="moreDetails">Plus de détails</a>
+                
+                <div class="bottom-content">
+                    <form action="{{ url_for("PrestaAdd") }}" method='post'>
+                        <button id="button">Ajouter</button>
+                        <input type="hidden" name="id" value="{{ prestation.id }}">
+                    </form>
+                    <a href="{{ url_for('prestaDetails',{'id':prestation.id}) }}" id="button">Plus de détails</a>
+                </div>
             </div>
         {% endfor %}
     </div>
