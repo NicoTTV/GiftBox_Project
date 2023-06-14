@@ -66,7 +66,6 @@ final class PrestationServiceTest extends TestCase
         foreach (self::$prestations as $prestation) {
             $prestation->delete();
         }
-
     }
 
     public function testgetCategories(): void

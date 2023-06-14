@@ -27,11 +27,9 @@ class PostAjoutCategorieAction extends AbstractAction{
                 'description' => $post_data['descCategorie'],
             ];
             $prestationsService = new PrestationsService();
-        
                 $prestationsService->createCategorie($categ_data);
             
                 return $rs->withStatus(302)->withHeader('Location', $routeParser->urlFor('categories'));
-       
         
         }
 }
