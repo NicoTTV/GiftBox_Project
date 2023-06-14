@@ -1,6 +1,6 @@
 <?php
 
-namespace gift\app\models;
+namespace gift\app\db;
 
 use PDO;
 

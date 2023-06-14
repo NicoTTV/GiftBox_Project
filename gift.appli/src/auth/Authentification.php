@@ -1,6 +1,8 @@
 <?php
 
-use \Illuminate\Database\Connectors\ConnectionFactory;
+namespace gift\app\auth;
+
+use gift\app\db\ConnectionFactory;
 
 class Authentification
 {
@@ -10,7 +12,7 @@ class Authentification
         $stmt = $db->prepare('SELECT * FROM user WHERE email = ?');
 
         if ($stmt->execute([$email])) {
-            $user = $stmt->fetch(\Illuminate\Database\PDO\)
+            $user = $stmt->fetch();
         }
     }
 }
