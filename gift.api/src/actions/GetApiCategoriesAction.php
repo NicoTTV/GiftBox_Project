@@ -3,6 +3,9 @@
 namespace gift\api\actions;
 
 use gift\api\models\Categorie;
+use gift\api\services\prestations\CategorieNotFoundException;
+use gift\api\services\prestations\PrestationsService;
+use Slim\Exception\HttpInternalServerErrorException;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 
@@ -11,12 +14,17 @@ class GetApiCategoriesAction extends AbstractAction
 
     public function __invoke(Request $rq, Response $rs, $args): Response
     {
-        $categories = Categorie::all();
+        $categories = new PrestationsService();
+        try {
+            $categories = $categories->getCategories();
+        } catch (CategorieNotFoundException $e) {
+            throw new HttpInternalServerErrorException($rq, $e->getMessage());
+        }
         $data = [];
         foreach ($categories as $categorie) {
             $data[] = [
                 'type' => 'collection',
-                'count' => $categories->count(),
+                'count' => count($categories),
                 'categories' => [
                     "categorie" => [
                         "id" => $categorie->id,
