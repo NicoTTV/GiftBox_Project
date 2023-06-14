@@ -1,0 +1,16 @@
+ {% extends "base.twig" %}
+
+{% block main %}
+
+
+{% if data is empty %}
+    <h1>Aucune prestation</h1>
+{% endif %}
+ {% for prestation in data %}
+        <h1>{{ prestation.libelle }}</h1>
+        <p>Description : {{ prestation.description }}</p>
+        <p>Unité : {{ prestation.unite }}</p>
+        <p>Tarif : {{ prestation.tarif }}</p>
+    {% endfor %}
+
+    {% endblock %}

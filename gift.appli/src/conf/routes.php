@@ -12,6 +12,7 @@ use gift\app\actions\GetPrestationsIdAction;
 use gift\app\actions\PostAjoutCategorieAction;
 use gift\app\actions\PostNewBoxesAction;
 use gift\app\actions\PostPrestationAdd;
+use gift\app\actions\GetBoxesIdAction;
 use Slim\App;
 
 return function (App $app) {
@@ -25,6 +26,7 @@ return function (App $app) {
     $app->post('/box/prestation/add', PostPrestationAdd::class)->setName('PrestaAdd');
     $app->get("/boxes/new",GetNewBoxesAction::class)->setName('formulaireBox');
     $app->get("/boxes",GetBoxesAction::class)->setName('boxes');
+    $app->get("/boxes/{id}",GetBoxesIdAction::class)->setName('boxId');
     $app->post("/boxes/new", PostNewBoxesAction::class)->setName('boxCreate');
     $app->get("/connexion", GetConnexionAction::class)->setName("connexion");
 };

@@ -93,4 +93,9 @@ class BoxService
     {
 
     }
+
+    public function getPrestationByBoxId(string $id)
+    {
+        return Box::findOrFail($id)->prestation()->get()->toArray();
+    }
 }
