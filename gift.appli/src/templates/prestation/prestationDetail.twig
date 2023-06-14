@@ -1,0 +1,27 @@
+{% extends "base.twig" %}
+
+{% block main %}
+    <div class="prestation-detail">
+        <div class="image-prestation">
+            <img src="{{ base_path() }}/../../shared/img/{{ prestation.img }}"
+                 alt="{{ prestation.libelle | capitalize }}">
+        </div>
+        
+        
+        <div class="main-content">
+            <span class="title">{{ prestation.libelle | capitalize }}</span>
+            <span class="desc">{{ prestation.description | capitalize }}</span>
+            
+            <div class="card-attribute">
+                <span id="tarif">{{ prestation.tarif }} <span
+                        class="material-symbols-rounded euro">euro_symbol</span> </span>
+                <span>{{ prestation.unite }}</span>
+            </div>
+            <form action="{{ url_for("PrestaAdd") }}" method='post'>
+                <button id="button">Ajouter à votre box</button>
+                <input type="hidden" name="id" value="{{ prestation.id }}">
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
