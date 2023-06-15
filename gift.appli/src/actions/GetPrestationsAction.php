@@ -24,7 +24,7 @@ class GetPrestationsAction extends AbstractAction
 
         $prestationsService = new PrestationsService();
         try {
-            $categories = $prestationsService->getPrestations();
+            $prestations = $prestationsService->getPrestations();
         } catch (PrestationNotFoundException) {
             throw new HttpNotFoundException($rq, "La prestation n'existe pas");
         }
@@ -32,6 +32,6 @@ class GetPrestationsAction extends AbstractAction
         $routeParser = $routeContext->getRouteParser();
         $routeParser->urlFor('categ2prestas',['id'=>0]);
         $twig = Twig::fromRequest($rq);
-        return $twig->render($rs,'prestation/index.twig',["categories"=>$categories]);
+        return $twig->render($rs,'prestation/index.twig',["prestations"=>$prestations]);
     }
 }

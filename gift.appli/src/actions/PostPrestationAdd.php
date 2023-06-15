@@ -4,7 +4,8 @@ namespace gift\app\actions;
 
 use gift\app\actions\AbstractAction;
 use gift\app\services\box\BoxService;
-    use gift\app\services\utils\CsrfService;
+use gift\app\services\Exceptions\BoxServiceBadDataException;
+use gift\app\services\utils\CsrfService;
     use gift\app\services\utils\ExceptionTokenVerify;
     use Slim\Exception\HttpInternalServerErrorException;
     use Slim\Psr7\Request;
@@ -19,10 +20,19 @@ class PostPrestationAdd extends AbstractAction
         $routeContext = RouteContext::fromRequest($rq);
         $routeParser = $routeContext->getRouteParser();
         $idPresta = $post_data['id'];
+
+        if (!isset($_SESSION['box'])) {
+            return $rs->withStatus(302)->withHeader('Location', $routeParser->urlFor('formulaireBox'));
+        }
         $id =  $_SESSION['box'];
+
         $boxservice = new BoxService();
-        $boxservice->ajoutPrestation($idPresta,$id);
-        
-    return $rs->withStatus(302)->withHeader('Location', $routeParser->urlFor('prestations'));
+        try {
+            $boxservice->ajoutPrestation($idPresta, $id);
+        } catch (BoxServiceBadDataException $e) {
+            throw new HttpInternalServerErrorException($rq);
+        }
+
+        return $rs->withStatus(302)->withHeader('Location', $routeParser->urlFor('prestations'));
 }
 }

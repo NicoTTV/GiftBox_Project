@@ -8,6 +8,7 @@ use gift\app\actions\GetAjoutCategorieAction;
 use gift\app\actions\GetMainAction;
 use gift\app\actions\GetNewBoxesAction;
 use gift\app\actions\GetPrestationsAction;
+use gift\app\actions\GetPrestationsDetailsAction;
 use gift\app\actions\GetPrestationsIdAction;
 use gift\app\actions\PostAjoutCategorieAction;
 use gift\app\actions\PostNewBoxesAction;
@@ -23,6 +24,7 @@ return function (App $app) {
     $app->get('/catgories/formulaire', GetAjoutCategorieAction::class)->setName('formulaireCateg');
     $app->post('/categories/formulaire', PostAjoutCategorieAction::class)->setName('catCreate');
     $app->get('/prestation', GetPrestationsAction::class)->setName('prestations');
+    $app->get('/prestation/{id}', GetPrestationsDetailsAction::class)->setName('prestaDetails');
     $app->post('/box/prestation/add', PostPrestationAdd::class)->setName('PrestaAdd');
     $app->get("/boxes/new",GetNewBoxesAction::class)->setName('formulaireBox');
     $app->get("/boxes",GetBoxesAction::class)->setName('boxes');
