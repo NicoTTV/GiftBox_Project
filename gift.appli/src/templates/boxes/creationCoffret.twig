@@ -6,9 +6,10 @@
         <p>Création d'une nouvelle boxe :</p>
         <form action="{{ url_for("boxCreate") }}" method="post">
             <input name="nomBox" type="text" placeholder="nom">
-            <input name="descBox" type="text" placeholder="catégorie">
-            <input name="mCadeau" type="text" placeholder="kdo">
-            <input name="cadeau" type="checkbox" value="1">
+            <input name="descBox" type="text" placeholder="description">
+            <input name="mCadeau" type="text" placeholder="message cadeau">
+            <label for="kdo">Cadeau ?</label>
+            <input name="cadeau" type="checkbox" value="1" id="kdo">
             <button name="submit">Ajouter</button>
             <input value="{{ csrf }}" name="csrf" type="hidden">
         </form>

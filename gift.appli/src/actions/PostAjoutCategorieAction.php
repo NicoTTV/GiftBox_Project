@@ -2,8 +2,10 @@
 
 namespace gift\app\actions;
 
+use gift\app\services\exceptions\ExceptionTokenVerify;
+use gift\app\services\exceptions\PrestationUpdateFailException;
+use gift\app\services\prestations\PrestationsServiceBadDataException;
 use gift\app\services\utils\CsrfService;
-use gift\app\services\utils\ExceptionTokenVerify;
 use Slim\Exception\HttpInternalServerErrorException;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
@@ -18,7 +20,8 @@ class PostAjoutCategorieAction extends AbstractAction{
         $routeParser = $routeContext->getRouteParser();
         $routeParser->urlFor('categories');
         $token = $post_data['csrf'];
-        try{ CsrfService::check($token);
+        try{
+            CsrfService::check($token);
         } catch (ExceptionTokenVerify $e) {
           throw new HttpInternalServerErrorException($rq);
         };
@@ -27,10 +30,14 @@ class PostAjoutCategorieAction extends AbstractAction{
                 'description' => $post_data['descCategorie'],
             ];
             $prestationsService = new PrestationsService();
-        
-                $prestationsService->createCategorie($categ_data);
-            
-                return $rs->withStatus(302)->withHeader('Location', $routeParser->urlFor('categories'));
+
+        try {
+            $prestationsService->createCategorie($categ_data);
+        } catch (PrestationUpdateFailException|PrestationsServiceBadDataException $e) {
+            throw new HttpInternalServerErrorException($rq, $e->getMessage());
+        }
+
+        return $rs->withStatus(302)->withHeader('Location', $routeParser->urlFor('categories'));
        
         
         }

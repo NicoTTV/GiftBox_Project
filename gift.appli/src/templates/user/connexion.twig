@@ -17,6 +17,7 @@
                     <input name="password" type="password" id="password" placeholder="Mot de passe" required>
                     <label for="password"></label>
                     <span class="material-symbols-rounded icon">lock</span>
+                    <input type="hidden" value="{{ csrf }}" name="csrf">
                 </div>
             </div>
             <button name="sign" id="connexion">Connexion</button>

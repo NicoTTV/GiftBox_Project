@@ -5,8 +5,8 @@ namespace gift\app\actions;
 use gift\app\services\box\BoxService;
 use gift\app\services\Exceptions\BoxUpdateFailException;
 use gift\app\services\Exceptions\BoxServiceBadDataException;
+use gift\app\services\exceptions\ExceptionTokenVerify;
 use gift\app\services\utils\CsrfService;
-use gift\app\services\utils\ExceptionTokenVerify;
 use Slim\Exception\HttpInternalServerErrorException;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
@@ -37,8 +37,9 @@ class PostNewBoxesAction extends AbstractAction
         try {
             $url = $boxService->creation($box_data);
         } catch (BoxServiceBadDataException|BoxUpdateFailException $e) {
-            echo $e->getMessage();
-            die();
+            throw new HttpInternalServerErrorException($rq, $e->getMessage());
+        } catch (\Throwable $e) {
+            throw new HttpInternalServerErrorException($rq, $e->getMessage());
         }
         return $rs->withStatus(302)->withHeader('Location', $routeParser->urlFor('boxes'));
     }
