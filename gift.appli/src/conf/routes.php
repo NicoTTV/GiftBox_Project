@@ -33,6 +33,7 @@ return function (App $app) {
     $app->get("/boxes/{id}",GetBoxesIdAction::class)->setName('boxId');
     $app->post("/boxes/new", PostNewBoxesAction::class)->setName('boxCreate');
     $app->get("/connexion", GetConnexionAction::class)->setName("connexion");
+    $app->post("/connexion", \gift\app\actions\PostConnexionAction::class)->setName("connexion.post");
     $app->get("/inscription", GetInscriptionAction::class)->setName("inscription");
     $app->post("/inscription", PostInscriptionAction::class)->setName("inscription.post");
 };

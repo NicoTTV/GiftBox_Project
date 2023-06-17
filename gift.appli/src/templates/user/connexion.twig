@@ -1,39 +1,37 @@
 {% extends "base.twig" %}
 
-{% block stylesheets %}
-    <link rel="stylesheet" href="{{ base_path() }}/styles/css/connexion/style.css">
-{% endblock %}
-
 
 {% block main %}
-    <div class="form-structor">
-        <div class="sign sign-in">
-            <form id="sign-in" action="?action=signin" method="post">
-                <div class="title">
-                    <h2>SE CONNECTER</h2>
+    <div class="sign sign-in">
+        <form id="sign" action="{{ url_for('connexion') }}" method="post">
+            <div class="title">
+                <h2>SE CONNECTER</h2>
+            </div>
+            <div class="input-box">
+                <div class="input-box-item">
+                    <input name="email" type="text" id="id" placeholder="Email" required>
+                    <label for="id"></label>
+                    <span class="material-symbols-rounded icon">email</span>
                 </div>
-                <div class="input-box">
-                    <div class="input-box-item border-bottom">
-                        <input name="identifiant" type="text" id="id" placeholder="Identifiant">
-                        <label for="id"></label>
-                        <span class="material-symbols-rounded">fingerprint</span>
-                    </div>
-                    <div class="input-box-item bottom">
-                        <input name="password" type="password" id="password" placeholder="Mot de passe">
-                        <label for="password"></label>
-                        <span class="material-symbols-rounded">lock</span>
-                    </div>
+                <div class="input-box-item">
+                    <input name="password" type="password" id="password" placeholder="Mot de passe" required>
+                    <label for="password"></label>
+                    <span class="material-symbols-rounded icon">lock</span>
                 </div>
-                <button name="sign" class="sender">Connexion</button>
-                <span class="separator"></span>
+            </div>
+            <button name="sign" id="connexion">Connexion</button>
+            <div class="bottom">
                 <div class="remember">
                     <label for="checkBox">
                         Se souvenir de moi
                     </label>
                     <input type="checkbox" name="remember" id="checkBox">
                 </div>
-            </form>
-        </div>
+                <div id="sign-up">
+                    <a href="{{ url_for('inscription') }}">S'inscrire</a>
+                </div>
+            </div>
+        </form>
     </div>
 {% endblock %}
 

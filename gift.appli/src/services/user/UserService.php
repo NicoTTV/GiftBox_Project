@@ -47,9 +47,6 @@ class UserService
         if (!isset($data['password']) || !isset($data['email']))
             throw new BadDataUserException("Bad data user : empty");
 
-        if ($data['password'] !== filter_var($data['password'], FILTER_SANITIZE_FULL_SPECIAL_CHARS))
-            throw new BadDataUserException("Bad data user : not a sanitize email");
-
         $user = $this->getUserByLogin($data['email']);
         if (empty($user))
             throw new UserNotFoundException("User not found");
