@@ -1,0 +1,48 @@
+{% extends "base.twig" %}
+
+
+{% block main %}
+    <div class="sign sign-up">
+        <form id="sign" action="{{ url_for('inscription') }}" method="post">
+            <div class="title">
+                <h2>S'INSCRIRE</h2>
+            </div>
+            <div class="input-box">
+                <div class="input-box-item">
+                    <input name="email" type="text" id="id" placeholder="Email">
+                    <label for="id"></label>
+                    <span class="material-symbols-rounded icon">email</span>
+                    <p>{{ error }}</p>
+                </div>
+                <div class="input-box-item">
+                    <input name="passwordVerify" type="password" id="password" placeholder="Mot de passe">
+                    <label for="password"></label>
+                    <span class="material-symbols-rounded icon">lock</span>
+                </div>
+                <div class="input-box-item">
+                    <input name="password" type="password" id="password" placeholder="Confirmer le passe">
+                    <label for="password"></label>
+                    <span class="material-symbols-rounded icon">lock</span>
+                </div>
+                <div class="input-box-item">
+                    <input name="pseudo" type="text" id="pseudo" placeholder="Pseudo">
+                    <label for="pseudo"></label>
+                    <span class="material-symbols-rounded icon">badge</span>
+                </div>
+            </div>
+            <button name="sign" id="connexion">S'inscrire</button>
+            <div class="bottom">
+                <div class="remember">
+                    <label for="checkBox">
+                        Se souvenir de moi
+                    </label>
+                    <input type="checkbox" name="remember" id="checkBox">
+                </div>
+                <div id="sign-in">
+                    <a href="{{ url_for('connexion') }}">Se connecter</a>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+

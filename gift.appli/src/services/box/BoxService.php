@@ -5,6 +5,7 @@ namespace gift\app\services\box;
 use Exception;
 use gift\app\models\Box;
 use gift\app\models\Prestation;
+use gift\app\models\User;
 use gift\app\services\Exceptions\BoxServiceBadDataException;
 use gift\app\services\Exceptions\BoxUpdateFailException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -17,8 +18,11 @@ use Throwable;
 class BoxService
 {
     /**
+     * @param array $cadeau
+     * @return string
      * @throws BoxServiceBadDataException
      * @throws BoxUpdateFailException
+     * @throws Throwable
      */
     public function creation(array $cadeau): string
     {
@@ -98,5 +102,10 @@ class BoxService
     public function getPrestationByBoxId(string $id)
     {
         return Box::findOrFail($id)->prestation()->get()->toArray();
+    }
+
+    public function affichageBoxesUtilisateurs(int $id_user):array
+    {
+        return User::find($id_user)->usersBoxes()->toArray();
     }
 }

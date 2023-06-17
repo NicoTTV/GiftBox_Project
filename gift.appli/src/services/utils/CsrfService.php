@@ -3,6 +3,8 @@
 namespace gift\app\services\utils;
 
 use Exception;
+use gift\app\services\exceptions\ExceptionTokenGenerate;
+use gift\app\services\exceptions\ExceptionTokenVerify;
 use Slim\Exception\HttpInternalServerErrorException;
 
 class CsrfService
