@@ -103,4 +103,16 @@ class UserService
         $_SESSION['user'] = serialize($user);
         return true;
     }
+
+    /**
+     * @throws UserNotFoundException
+     */
+    public function affichageBoxesUtilisateurs(int $id_user):array
+    {
+        try {
+            return User::find($id_user)->usersBoxes()->get()->toArray();
+        }catch (Exception $e){
+            throw new UserNotFoundException($e->getMessage());
+        }
+    }
 }

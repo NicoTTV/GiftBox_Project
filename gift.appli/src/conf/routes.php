@@ -12,6 +12,7 @@ use gift\app\actions\GetPrestationsAction;
 use gift\app\actions\GetPrestationsDetailsAction;
 use gift\app\actions\GetPrestationsIdAction;
 use gift\app\actions\PostAjoutCategorieAction;
+use gift\app\actions\PostConnexionAction;
 use gift\app\actions\PostInscriptionAction;
 use gift\app\actions\PostNewBoxesAction;
 use gift\app\actions\PostPrestationAdd;
@@ -33,7 +34,7 @@ return function (App $app) {
     $app->get("/boxes/{id}",GetBoxesIdAction::class)->setName('boxId');
     $app->post("/boxes/new", PostNewBoxesAction::class)->setName('boxCreate');
     $app->get("/connexion", GetConnexionAction::class)->setName("connexion");
-    $app->post("/connexion", \gift\app\actions\PostConnexionAction::class)->setName("connexion.post");
+    $app->post("/connexion", PostConnexionAction::class)->setName("connexion.post");
     $app->get("/inscription", GetInscriptionAction::class)->setName("inscription");
     $app->post("/inscription", PostInscriptionAction::class)->setName("inscription.post");
 };

@@ -57,6 +57,8 @@ class BoxService
             } catch (Exception) {
                 throw new BoxUpdateFailException('Token error');
             }
+            $newBox->id_user = unserialize($_SESSION['user'])[0]['id'];
+            $newBox->estPredefinis = 0;
             $newBox->statut = Box::CREATED;
             $newBox->id = Uuid::uuid4()->toString();
             $newBox->saveOrFail();
@@ -68,9 +70,9 @@ class BoxService
         return $url;
     }
 
-    public function affichage():array
+    public function affichageBoxesPredefinis():array
     {
-        return Box::all()->toArray();
+        return Box::where('estPredefinis',1)->get()->toArray();
     }
 
     /**
@@ -102,10 +104,5 @@ class BoxService
     public function getPrestationByBoxId(string $id)
     {
         return Box::findOrFail($id)->prestation()->get()->toArray();
-    }
-
-    public function affichageBoxesUtilisateurs(int $id_user):array
-    {
-        return User::find($id_user)->usersBoxes()->toArray();
     }
 }

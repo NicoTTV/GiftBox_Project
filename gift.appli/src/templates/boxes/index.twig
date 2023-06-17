@@ -1,11 +1,27 @@
 {% extends "base.twig" %}
 
 {% block main %}
-    <ul>
-    {% for box in boxes %}
-        <li><a href="{{ url_for('boxId',{'id' : box.id})}}">{{ box.libelle }}</a></li>
-    {% endfor %}
-        <a href="{{ url_for('boxCreate') }}">Creez une nouvelle box ici !</a>
-    </ul>
+    <div class="boxes">
+        <div class="boxesPredefinis">
+            {% for box in boxes %}
+                <div class="content">
+                    <h2>{{ box.libelle }}</h2>
+                    <a href="{{ url_for('boxId',{'id' : box.id})}}">Plus d'infos</a>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="boxesUser">
+            <h1>Vos boxes</h1>
+            {% for boxUser in boxesUser %}
+                <div class="content">
+                    <h2>{{ boxUser.libelle }}</h2>
+                    <a href="{{ url_for('boxId',{'id' : boxUser.id})}}">Plus d'infos</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="addBox">
+        <a href="{{ url_for('formulaireBox') }}">Ajouter une box</a>
+    </div>
 {% endblock %}
 
