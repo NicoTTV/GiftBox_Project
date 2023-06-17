@@ -17,6 +17,7 @@ use gift\app\actions\PostInscriptionAction;
 use gift\app\actions\PostNewBoxesAction;
 use gift\app\actions\PostPrestationAdd;
 use gift\app\actions\GetBoxesIdAction;
+use gift\app\actions\PostPrestationDelete;
 use Slim\App;
 
 return function (App $app) {
@@ -29,6 +30,7 @@ return function (App $app) {
     $app->get('/prestation', GetPrestationsAction::class)->setName('prestations');
     $app->get('/prestation/{id}', GetPrestationsDetailsAction::class)->setName('prestaDetails');
     $app->post('/box/prestation/add', PostPrestationAdd::class)->setName('PrestaAdd');
+    $app->post('/box/prestation/delete', PostPrestationDelete::class)->setName('prestaDelete');
     $app->get("/boxes/new",GetNewBoxesAction::class)->setName('formulaireBox');
     $app->get("/boxes",GetBoxesAction::class)->setName('boxes');
     $app->get("/boxes/{id}",GetBoxesIdAction::class)->setName('boxId');

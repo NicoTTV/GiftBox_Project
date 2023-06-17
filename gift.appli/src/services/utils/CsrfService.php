@@ -31,7 +31,7 @@ class CsrfService
         $sessionToken = $_SESSION['csrf'];
         unset($_SESSION['csrf']);
         if ($token !== $sessionToken) {
-            throw new ExceptionTokenVerify();
+            throw new ExceptionTokenVerify('Token invalide');
         }
     }
 }

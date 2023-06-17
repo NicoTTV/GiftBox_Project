@@ -5,9 +5,10 @@ namespace gift\app\services\box;
 use Exception;
 use gift\app\models\Box;
 use gift\app\models\Prestation;
-use gift\app\models\User;
-use gift\app\services\Exceptions\BoxServiceBadDataException;
-use gift\app\services\Exceptions\BoxUpdateFailException;
+use gift\app\services\exceptions\BoxServiceBadDataException;
+use gift\app\services\exceptions\BoxServiceDataNotFoundException;
+use gift\app\services\exceptions\BoxServiceUpdateFailException;
+use gift\app\services\exceptions\PrestationNotFoundException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Ramsey\Uuid\Uuid;
 use Throwable;
@@ -21,7 +22,7 @@ class BoxService
      * @param array $cadeau
      * @return string
      * @throws BoxServiceBadDataException
-     * @throws BoxUpdateFailException
+     * @throws BoxServiceUpdateFailException
      * @throws Throwable
      */
     public function creation(array $cadeau): string
@@ -55,7 +56,7 @@ class BoxService
                 $newBox->token = bin2hex(random_bytes(64));
                 $url = $cadeau['url'].'/'.$newBox->token;
             } catch (Exception) {
-                throw new BoxUpdateFailException('Token error');
+                throw new BoxServiceUpdateFailException('Token error');
             }
             $newBox->id_user = unserialize($_SESSION['user'])[0]['id'];
             $newBox->estPredefinis = 0;
@@ -65,20 +66,29 @@ class BoxService
 
             $_SESSION['box'] = $newBox->id;
         } catch (ModelNotFoundException) {
-            throw new BoxUpdateFailException();
+            throw new BoxServiceUpdateFailException();
         }
         return $url;
     }
 
+    /**
+     * @throws BoxServiceDataNotFoundException
+     */
     public function affichageBoxesPredefinis():array
     {
-        return Box::where('estPredefinis',1)->get()->toArray();
+        try {
+            return Box::where('estPredefinis',1)->get()->toArray();
+        }catch (ModelNotFoundException) {
+            throw new BoxServiceDataNotFoundException();
+        }
     }
+
 
     /**
      * @throws BoxServiceBadDataException
+     * @throws BoxServiceDataNotFoundException
      */
-    public function ajoutPrestation(string $id_presta, string $id_coffret): void
+    private function verifyData(string $id_presta, string $id_coffret): Box
     {
         if ($id_presta !== filter_var($id_presta,FILTER_SANITIZE_FULL_SPECIAL_CHARS))
             throw new BoxServiceBadDataException("Bad data : id_presta");
@@ -86,23 +96,90 @@ class BoxService
         if ($id_coffret !== filter_var($id_coffret,FILTER_SANITIZE_FULL_SPECIAL_CHARS))
             throw new BoxServiceBadDataException("Bad data : id_coffret");
 
-        $box = Box::findOrFail($id_coffret);
+        try {
+            return Box::findOrFail($id_coffret);
+        }catch (ModelNotFoundException) {
+            throw new BoxServiceDataNotFoundException("Bad data : id_coffret");
+        }
+    }
+
+    /**
+     * @throws BoxServiceBadDataException
+     * @throws BoxServiceDataNotFoundException
+     * @throws BoxServiceUpdateFailException
+     */
+    public function ajoutPrestation(string $id_presta, string $id_coffret): void
+    {
+        $box = $this->verifyData($id_presta, $id_coffret);
         if ($box->prestation()->find($id_presta) == null) {
             $box->prestation()->attach($id_presta , ['quantite' => 1]);
         } else {
             $box->prestation()->updateExistingPivot($id_presta, ['quantite' => $box->prestation()->find($id_presta)->pivot->quantite + 1]);
         }
-        $prestation = Prestation::findOrFail($id_presta);
-        $box->update(['montant' => $box->montant + $prestation->tarif]);
+        try {
+            $prestation = Prestation::findOrFail($id_presta);
+        }catch (ModelNotFoundException) {
+            throw new BoxServiceDataNotFoundException("Bad data : id_presta");
+        }
+        try {
+            $box->update(['montant' => $box->montant + $prestation->tarif]);
+        }catch (ModelNotFoundException) {
+            throw new BoxServiceUpdateFailException();
+        }
     }
 
-    public function retraitPrestations()
+    /**
+     * @throws BoxServiceBadDataException
+     * @throws BoxServiceDataNotFoundException
+     * @throws BoxServiceUpdateFailException
+     */
+    public function retirerPrestation(string $id_presta, string $id_coffret, int $quantite): void
     {
 
+        $box = $this->verifyData($id_presta, $id_coffret);
+        if (!filter_var($quantite,FILTER_VALIDATE_INT))
+            throw new BoxServiceBadDataException("Bad data : quantite");
+
+        try {
+            if ($box->prestation()->find($id_presta) != null) {
+                if ($box->prestation()->find($id_presta)->pivot->quantite > 1) {
+                    $box->prestation()->updateExistingPivot($id_presta, ['quantite' => $box->prestation()->find($id_presta)->pivot->quantite - 1]);
+                } else {
+                    $box->prestation()->detach($id_presta);
+                }
+                $prestation = Prestation::findOrFail($id_presta);
+                try {
+                    $box->update(['montant' => $box->montant - $prestation->tarif]);
+                }catch (ModelNotFoundException) {
+                    throw new BoxServiceUpdateFailException();
+                }
+            }
+        }catch (ModelNotFoundException) {
+            throw new BoxServiceDataNotFoundException("Bad data : id_presta");
+        }
     }
 
+    /**
+     * @throws PrestationNotFoundException
+     */
     public function getPrestationByBoxId(string $id)
     {
-        return Box::findOrFail($id)->prestation()->get()->toArray();
+        try {
+            return Box::findOrFail($id)->prestation()->get()->toArray();
+        }catch (ModelNotFoundException) {
+            throw new PrestationNotFoundException();
+        }
+    }
+
+    /**
+     * @throws PrestationNotFoundException
+     */
+    public function getBoxById(string $id): array
+    {
+        try {
+            return Box::findOrFail($id)->toArray();
+        }catch (ModelNotFoundException) {
+            throw new PrestationNotFoundException();
+        }
     }
 }

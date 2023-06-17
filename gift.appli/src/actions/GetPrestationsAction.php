@@ -3,15 +3,19 @@
 namespace gift\app\actions;
 
 use gift\app\models\Prestation;
-use gift\app\services\prestations\CategorieNotFoundException;
-use gift\app\services\prestations\PrestationNotFoundException;
+use gift\app\services\exceptions\ExceptionTokenGenerate;
+use gift\app\services\exceptions\PrestationNotFoundException;
 use gift\app\services\prestations\PrestationsService;
-use Slim\Exception\HttpBadRequestException;
+use gift\app\services\utils\CsrfService;
+use Slim\Exception\HttpInternalServerErrorException;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 use Slim\Routing\RouteContext;
 use Slim\Views\Twig;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class GetPrestationsAction extends AbstractAction
 {
@@ -28,10 +32,16 @@ class GetPrestationsAction extends AbstractAction
         } catch (PrestationNotFoundException) {
             throw new HttpNotFoundException($rq, "La prestation n'existe pas");
         }
-        $routeContext = RouteContext::fromRequest($rq);
-        $routeParser = $routeContext->getRouteParser();
-        $routeParser->urlFor('categ2prestas',['id'=>0]);
+        try {
+            $csrf = CsrfService::generate();
+        } catch (ExceptionTokenGenerate $e) {
+            throw new HttpInternalServerErrorException($rq, $e->getMessage());
+        }
         $twig = Twig::fromRequest($rq);
-        return $twig->render($rs,'prestation/index.twig',["prestations"=>$prestations]);
+        try {
+            return $twig->render($rs, 'prestation/index.twig', ["prestations" => $prestations, "csrf" => $csrf]);
+        } catch (LoaderError|RuntimeError|SyntaxError $e) {
+            throw new HttpInternalServerErrorException($rq, $e->getMessage());
+        }
     }
 }

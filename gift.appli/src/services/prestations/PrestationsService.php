@@ -2,12 +2,16 @@
 
 namespace gift\app\services\prestations;
 
+
+
 use gift\app\models\Categorie;
 use gift\app\models\Prestation;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Database\QueryException;
-use Throwable;
+use gift\app\services\exceptions\CategorieNotFoundException;
+use gift\app\services\exceptions\PrestationNotFoundException;
+use gift\app\services\exceptions\PrestationsServiceBadDataException;
 use gift\app\services\exceptions\PrestationUpdateFailException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Throwable;
 
 class PrestationsService
 {
@@ -101,8 +105,10 @@ class PrestationsService
     }
 
     /**
+     * @param array $categ
+     * @return int
      * @throws PrestationUpdateFailException
-     * @throws PrestationsServiceBadDataException
+     * @throws \Throwable
      */
     public function createCategorie(array $categ):int
     {

@@ -7,7 +7,7 @@ use gift\app\models\Box;
 use gift\app\models\Prestation;
 use gift\app\services\box\BoxService;
 use gift\app\services\Exceptions\BoxServiceBadDataException;
-use gift\app\services\Exceptions\BoxUpdateFailException;
+use gift\app\services\Exceptions\BoxServiceUpdateFailException;
 use Illuminate\Database\Capsule\Manager;
 use PHPUnit\Framework\TestCase;
 
@@ -53,7 +53,7 @@ class BoxServiceTest extends TestCase
         }
     }
     /**
-     * @throws BoxUpdateFailException
+     * @throws BoxServiceUpdateFailException
      * @throws BoxServiceBadDataException
      */
     public function testCreateBoxe()
@@ -78,7 +78,7 @@ class BoxServiceTest extends TestCase
     }
 
     /**
-     * @throws BoxUpdateFailException
+     * @throws BoxServiceUpdateFailException
      * @throws BoxServiceBadDataException
      */
     public function testAjoutPrestationBoxe()

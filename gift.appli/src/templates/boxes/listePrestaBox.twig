@@ -1,16 +1,34 @@
- {% extends "base.twig" %}
+{% extends "base.twig" %}
 
 {% block main %}
+    
+    <h1>Votre box {{ box.libelle }}</h1>
+    <div class="prestation-detail" id="boxDetail">
+        {% if data is empty %}
+            <h1>Aucune prestation</h1>
+        {% endif %}
+        {% for prestation in data %}
+            <div class="main-content" id="box2prestas">
+                <h1>{{ prestation.libelle }}</h1>
+                <p>Description : {{ prestation.description }}</p>
+                <p>Unité : {{ prestation.unite }}</p>
+                <p>Tarif : {{ prestation.tarif }}€</p>
+                <p>Quantite : {{ prestation.pivot.quantite }}</p>
+                <form action="{{ url_for("PrestaAdd") }}" method='post'>
+                    <button id="button">Ajouter</button>
+                    <input type="number" name="quantite" id="addCount" value="1" min="1" max="100">
+                    <input type="hidden" name="id" value="{{ prestation.id }}">
+                    <input type="hidden" name="csrf" value="{{ csrf }}">
+                </form>
+                <form action="{{ url_for("prestaDelete") }}" method='post'>
+                    <button id="button">Supprimer</button>
+                    <input type="number" name="quantite" id="addCount" value="1" min="1" max="{{ prestation.pivot.quantite }}">
+                    <input type="hidden" name="id" value="{{ prestation.id }}">
+                    <input type="hidden" name="csrf" value="{{ csrf }}">
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+    <a href="{{ url_for('prestations') }}" id="redirect">Toutes les prestations</a>
 
-
-{% if data is empty %}
-    <h1>Aucune prestation</h1>
-{% endif %}
- {% for prestation in data %}
-        <h1>{{ prestation.libelle }}</h1>
-        <p>Description : {{ prestation.description }}</p>
-        <p>Unité : {{ prestation.unite }}</p>
-        <p>Tarif : {{ prestation.tarif }}</p>
-    {% endfor %}
-
-    {% endblock %}
+{% endblock %}

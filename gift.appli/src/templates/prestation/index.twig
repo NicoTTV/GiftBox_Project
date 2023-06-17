@@ -5,7 +5,7 @@
     <div class="content">
         {% for prestation in prestations %}
             <div class="div-content">
-                <img src="{{ base_path() }}/../../shared/img/{{ prestation.img }}"
+                <img src="{{ base_path() }}/img/{{ prestation.img }}"
                      alt="{{ prestation.libelle | capitalize }}">
                 
                 <div class="card-attribute">
@@ -18,6 +18,7 @@
                     <form action="{{ url_for("PrestaAdd") }}" method='post'>
                         <button id="button">Ajouter</button>
                         <input type="hidden" name="id" value="{{ prestation.id }}">
+                        <input type="hidden" name="csrf" value="{{ csrf }}">
                     </form>
                     <a href="{{ url_for('prestaDetails',{'id':prestation.id}) }}" id="button">Plus de détails</a>
                 </div>

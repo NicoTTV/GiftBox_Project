@@ -72,6 +72,7 @@ main .content {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
     grid-gap: 4em 2em;
+    width: 100%;
 }
 
 .div-content {
@@ -151,18 +152,14 @@ main .content {
     justify-content: flex-start;
     align-items: flex-start;
     padding: 30px;
+    width: 100%;
 }
 
-.prestation-detail .image-prestation img {
-    width: 400px;
-    height: 400px;
-}
 
 .prestation-detail .image-prestation {
     display: flex;
     box-shadow: rgba(0, 0, 0, 0.2) 0 0px 15px 0;
     border-radius: 10px;
-    overflow: hidden;
 }
 
 .prestation-detail .main-content {
@@ -485,4 +482,39 @@ input {
     padding: 10px 20px;
     border-radius: 15px;
     margin-bottom: 10px;
+}
+
+input#addCount {
+    width: 40px
+}
+
+#box2prestas {
+    border: #2F3C7E 1px solid;
+    padding: 20px;
+    margin-left: 0;
+    box-shadow: 0 2px 8px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+#boxDetail {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 20px;
+    padding: 0;
+    margin: 20px;
+    height: 100%;
+    width: 100%;
+}
+
+a#redirect {
+    color: #2F3C7E;
+    font-size: 1.2em;
+    text-decoration: none;
+    margin-bottom: 10px;
+    align-self: flex-start;
+}
+
+#redirect:hover {
+    color: #2F3C7E;
+    text-decoration: underline;
 }

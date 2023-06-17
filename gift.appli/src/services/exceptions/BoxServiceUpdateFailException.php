@@ -4,7 +4,6 @@ namespace gift\app\services\exceptions;
 
 use Exception;
 
-class PrestationsServiceBadDataException extends Exception
+class BoxServiceUpdateFailException extends Exception
 {
-
 }
