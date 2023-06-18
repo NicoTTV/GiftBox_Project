@@ -2,8 +2,8 @@
 
 namespace gift\app\actions;
 
+use gift\app\services\exceptions\ExceptionTokenGenerate;
 use gift\app\services\utils\CsrfService;
-use gift\app\services\utils\ExceptionTokenGenerate;
 use Slim\Exception\HttpInternalServerErrorException;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;

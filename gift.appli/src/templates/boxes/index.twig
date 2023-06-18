@@ -6,22 +6,29 @@
             {% for box in boxes %}
                 <div class="content">
                     <h2>{{ box.libelle }}</h2>
-                    <a href="{{ url_for('boxId',{'id' : box.id})}}">Plus d'infos</a>
+                    <a href="{{ url_for('boxId',{'id' : box.id}) }}">Plus d'infos</a>
                 </div>
             {% endfor %}
         </div>
         <div class="boxesUser">
             <h1>Vos boxes</h1>
-            {% for boxUser in boxesUser %}
-                <div class="content">
-                    <h2>{{ boxUser.libelle }}</h2>
-                    <a href="{{ url_for('boxId',{'id' : boxUser.id})}}">Plus d'infos</a>
-                </div>
-            {% endfor %}
+            {% if idUser is not empty %}
+                {% for boxUser in boxesUser %}
+                    <div class="content">
+                        <h2>{{ boxUser.libelle }}</h2>
+                        <a href="{{ url_for('boxId',{'id' : boxUser.id}) }}">Plus d'infos</a>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>Vous n'êtes pas connecté</p>
+                <a href="{{ url_for('connexion') }}">Connectez-vous</a>
+            {% endif %}
         </div>
     </div>
-    <div class="addBox">
-        <a href="{{ url_for('formulaireBox') }}">Ajouter une box</a>
-    </div>
+    {% if idUser is not empty %}
+        <div class="addBox">
+            <a href="{{ url_for('formulaireBox') }}">Ajouter une box</a>
+        </div>
+    {% endif %}
 {% endblock %}
 

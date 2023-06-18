@@ -7,6 +7,7 @@ use gift\app\services\exceptions\ExceptionTokenGenerate;
 use gift\app\services\exceptions\PrestationNotFoundException;
 use gift\app\services\prestations\PrestationsService;
 use gift\app\services\utils\CsrfService;
+use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpInternalServerErrorException;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Psr7\Request;
@@ -25,21 +26,25 @@ class GetPrestationsAction extends AbstractAction
      */
     public function __invoke(Request $rq, Response $rs, $args): Response
     {
-
         $prestationsService = new PrestationsService();
         try {
             $prestations = $prestationsService->getPrestations();
         } catch (PrestationNotFoundException) {
             throw new HttpNotFoundException($rq, "La prestation n'existe pas");
         }
+        $idUser = null;
+        if (isset($_SESSION['user'])) {
+            $idUser = unserialize($_SESSION['user'])[0]['id'];
+        }
         try {
             $csrf = CsrfService::generate();
         } catch (ExceptionTokenGenerate $e) {
             throw new HttpInternalServerErrorException($rq, $e->getMessage());
         }
+
         $twig = Twig::fromRequest($rq);
         try {
-            return $twig->render($rs, 'prestation/index.twig', ["prestations" => $prestations, "csrf" => $csrf]);
+            return $twig->render($rs, 'prestation/index.twig', ["prestations" => $prestations, "csrf" => $csrf, "idUser" => $idUser]);
         } catch (LoaderError|RuntimeError|SyntaxError $e) {
             throw new HttpInternalServerErrorException($rq, $e->getMessage());
         }

@@ -2,8 +2,10 @@
 
 namespace gift\app\actions;
 
-use gift\app\services\prestations\PrestationNotFoundException;
+use gift\app\services\exceptions\ExceptionTokenGenerate;
+use gift\app\services\exceptions\PrestationNotFoundException;
 use gift\app\services\prestations\PrestationsService;
+use gift\app\services\utils\CsrfService;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpInternalServerErrorException;
 use Slim\Exception\HttpNotFoundException;
@@ -24,6 +26,15 @@ class GetPrestationsIdAction extends AbstractAction
         if (!isset($id)) {
             throw new HttpBadRequestException($rq, "La prestation est obligatoire");
         }
+        $idUser = null;
+        if (isset($_SESSION['user'])) {
+            $idUser = unserialize($_SESSION['user']['id']);
+        }
+        try {
+            $csrf = CsrfService::generate();
+        } catch (ExceptionTokenGenerate $e) {
+            throw new HttpInternalServerErrorException($rq, $e->getMessage());
+        }
         $prestationsService = new PrestationsService();
         try {
             $prestations = $prestationsService->getPrestationsByCategorie($id,2);
@@ -38,7 +49,7 @@ class GetPrestationsIdAction extends AbstractAction
         }
         $twig = Twig::fromRequest($rq);
         try {
-            return $twig->render($rs, 'prestation/PrestationID.twig', ["prestations"=>$prestations,"id"=>$id]);
+            return $twig->render($rs, 'prestation/index.twig', ["prestations"=>$prestations,"id"=>$id, "csrf" => $csrf, "idUser" => $idUser]);
         } catch (LoaderError|RuntimeError|SyntaxError $e) {
             throw new HttpInternalServerErrorException($rq);
         }

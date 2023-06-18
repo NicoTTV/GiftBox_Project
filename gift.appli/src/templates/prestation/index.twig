@@ -15,11 +15,13 @@
                 </div>
                 
                 <div class="bottom-content">
-                    <form action="{{ url_for("PrestaAdd") }}" method='post'>
-                        <button id="button">Ajouter</button>
-                        <input type="hidden" name="id" value="{{ prestation.id }}">
-                        <input type="hidden" name="csrf" value="{{ csrf }}">
-                    </form>
+                    {% if idUser is not empty %}
+                        <form action="{{ url_for("PrestaAdd") }}" method='post'>
+                            <button id="button">Ajouter</button>
+                            <input type="hidden" name="id" value="{{ prestation.id }}">
+                            <input type="hidden" name="csrf" value="{{ csrf }}">
+                        </form>
+                    {% endif %}
                     <a href="{{ url_for('prestaDetails',{'id':prestation.id}) }}" id="button">Plus de détails</a>
                 </div>
             </div>

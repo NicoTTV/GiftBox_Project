@@ -3,15 +3,7 @@
 {% block main %}
 
 
-<form action="{{url_for("categ2prestas",{'id':id})}}" method="get">
-<button name="triec" value = 0>Croissant</button>
-<input type="hidden" name="triec" value =0 ></input>
-</form>
 
-<form action="{{url_for("categ2prestas",{'id':id})}}" method="get">
-<button name="triec" value = 1>Decroissant</button>
-<input type="hidden" name="tried" value =1 ></input>
-</form>
 
     {% for prestation in prestations %}
         <h1>{{ prestation.libelle }}</h1>

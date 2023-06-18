@@ -518,3 +518,10 @@ a#redirect {
     color: #2F3C7E;
     text-decoration: underline;
 }
+
+.boxesUser > a {
+    color: #FBEAEB;
+    font-size: 1.2em;
+    text-decoration: none;
+    margin-bottom: 10px;
+}
